@@ -9,7 +9,7 @@ let course_schema = new mongoose.Schema({
         default: Date.now()
     },
     isPublished: Boolean,
-    price: Number
+    price: Number,
 });
 
 let Course = mongoose.model('Course',course_schema);
