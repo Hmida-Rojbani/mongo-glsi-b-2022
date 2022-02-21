@@ -4,7 +4,13 @@ const Joi = require('joi');
 let author_schema = new mongoose.Schema({
     name : String,
     email : String,
-    telephone : String 
+    telephone : String,
+    courses : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref  : ' Course'
+        }
+    ]
 });
 
 let validation_author = Joi.object({

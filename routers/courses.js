@@ -1,14 +1,25 @@
 const router = require('express').Router();
 const {Course, validation_course,validation_update_course} = require('../models/course');
-
+const { Author } = require('../models/author');
 // add course to DB 
 router.post('',async (req,res)=>{
     try {
+
         let results= validation_course.validate(req.body);
         if(results.error)
             return res.status(400).send(results.error.details[0].message);
+        // test contre Author
+        let author = await Author.findById(req.body.author);
+        if(! author )
+            return res.status(404).send('Author id is not found')
+        req.body.author = {
+            name : author.name,
+            id : author._id
+        }
         let course = new Course(req.body);
         course = await course.save();
+        author.courses.push(course._id)
+        await author.save();
         res.send(course);
     } catch (error) {
         res.status(400).send('Error saving course :',error.message);
@@ -19,7 +30,7 @@ router.post('',async (req,res)=>{
 // get All courses
 router.get('',async (req,res)=>{
     try {
-        let courses = await Course.find();
+        let courses = await Course.find()//.populate('author.id');
         res.send(courses)
     } catch (error) {
         res.status(400).send('Error saving course :',error.message);
