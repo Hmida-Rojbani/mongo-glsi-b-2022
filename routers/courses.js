@@ -87,6 +87,27 @@ router.get('/title/starts/:prefixe',async (req,res)=>{
     }
     
 })
+//update
+router.put('/:id',async (req,res)=>{
+    try {
+        await Course.updateOne({_id : req.params.id}, req.body);
+        res.send(await Course.findById(req.params.id));
+    } catch (error) {
+        res.status(400).send('Error updating course :',error.message);
+    }
+    
+});
 
+router.delete('/:id',async (req,res)=>{
+    try {
+        let course = await Course.findByIdAndRemove(req.params.id);
+        if(!course)
+            return res.status(404).send('Course with id is not found');
+        res.send(course);
+    } catch (error) {
+        res.status(400).send('Error Deleting course :',error.message);
+    }
+    
+});
 
 module.exports=router;
