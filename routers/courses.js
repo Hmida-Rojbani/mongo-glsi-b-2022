@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Course, validation_course} = require('../models/course');
+const {Course, validation_course,validation_update_course} = require('../models/course');
 
 // add course to DB 
 router.post('',async (req,res)=>{
@@ -90,6 +90,10 @@ router.get('/title/starts/:prefixe',async (req,res)=>{
 //update
 router.put('/:id',async (req,res)=>{
     try {
+        let results= validation_update_course.validate(req.body);
+        if(results.error)
+            return res.status(400).send(results.error.details[0].message);
+        
         await Course.updateOne({_id : req.params.id}, req.body);
         res.send(await Course.findById(req.params.id));
     } catch (error) {
