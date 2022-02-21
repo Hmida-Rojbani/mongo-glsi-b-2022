@@ -22,7 +22,7 @@ router.post('',async (req,res)=>{
         await author.save();
         res.send(course);
     } catch (error) {
-        res.status(400).send('Error saving course :',error.message);
+        res.status(400).send('Error saving course :'+error.message);
     }
     
 });
@@ -33,7 +33,7 @@ router.get('',async (req,res)=>{
         let courses = await Course.find()//.populate('author.id');
         res.send(courses)
     } catch (error) {
-        res.status(400).send('Error saving course :',error.message);
+        res.status(400).send('Error saving course :'+error.message);
     }
     
 });
@@ -47,7 +47,7 @@ router.get('/title/:t',async (req,res)=>{
 
         res.send(courses)
     } catch (error) {
-        res.status(400).send('Error saving course :',error.message);
+        res.status(400).send('Error saving course :'+error.message);
     }
     
 })
@@ -59,7 +59,7 @@ router.get('/price/over/:p',async (req,res)=>{
 
         res.send(courses)
     } catch (error) {
-        res.status(400).send('Error saving course :',error.message);
+        res.status(400).send('Error saving course :'+error.message);
     }
     
 })
@@ -72,7 +72,7 @@ router.get('/price/under/:p',async (req,res)=>{
 
         res.send(courses)
     } catch (error) {
-        res.status(400).send('Error saving course :',error.message);
+        res.status(400).send('Error saving course :'+error.message);
     }
     
 })
@@ -83,7 +83,7 @@ router.get('/title/in',async (req,res)=>{
 
         res.send(courses)
     } catch (error) {
-        res.status(400).send('Error saving course :',error.message);
+        res.status(400).send('Error saving course :'+error.message);
     }
     
 })
@@ -94,7 +94,7 @@ router.get('/title/starts/:prefixe',async (req,res)=>{
 
         res.send(courses)
     } catch (error) {
-        res.status(400).send('Error saving course :',error.message);
+        res.status(400).send('Error saving course :'+error.message);
     }
     
 })
@@ -108,7 +108,7 @@ router.put('/:id',async (req,res)=>{
         await Course.updateOne({_id : req.params.id}, req.body);
         res.send(await Course.findById(req.params.id));
     } catch (error) {
-        res.status(400).send('Error updating course :',error.message);
+        res.status(400).send('Error updating course :'+error.message);
     }
     
 });

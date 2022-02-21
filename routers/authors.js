@@ -11,7 +11,7 @@ router.post('',async (req,res)=>{
         author = await author.save();
         res.send(author);
     } catch (error) {
-        res.status(400).send('Error saving author :',error.message);
+        res.status(400).send('Error saving author :'+error.message);
     }
     
 });
@@ -22,7 +22,7 @@ router.get('',async (req,res)=>{
         let authors = await Author.find();
         res.send(authors)
     } catch (error) {
-        res.status(400).send('Error saving course :',error.message);
+        res.status(400).send('Error saving course :'+error.message);
     }
     
 });
@@ -37,7 +37,7 @@ router.put('/:id',async (req,res)=>{
         await Author.updateOne({_id : req.params.id}, req.body);
         res.send(await Author.findById(req.params.id));
     } catch (error) {
-        res.status(400).send('Error updating auhtor :',error.message);
+        res.status(400).send('Error updating auhtor :'+error.message);
     }
     
 });
@@ -49,7 +49,7 @@ router.delete('/:id',async (req,res)=>{
             return res.status(404).send('Author with id is not found');
         res.send(author);
     } catch (error) {
-        res.status(400).send('Error Deleting Author :',error.message);
+        res.status(400).send('Error Deleting Author :'+error.message);
     }
     
 });
