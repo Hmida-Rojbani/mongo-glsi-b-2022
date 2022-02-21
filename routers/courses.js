@@ -1,9 +1,12 @@
 const router = require('express').Router();
-const {Course} = require('../models/course');
+const {Course, validation_course} = require('../models/course');
 
 // add course to DB 
 router.post('',async (req,res)=>{
     try {
+        let results= validation_course.validate(req.body);
+        if(results.error)
+            return res.status(400).send(results.error.details[0].message);
         let course = new Course(req.body);
         course = await course.save();
         res.send(course);

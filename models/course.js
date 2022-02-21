@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
 
 let course_schema = new mongoose.Schema({
     title : String,
@@ -12,6 +13,16 @@ let course_schema = new mongoose.Schema({
     price: Number,
 });
 
+let validation_course = Joi.object({
+    title : Joi.string().alphanum().required(),
+    author: Joi.string().min(3).required(),
+    tags : Joi.array().items(Joi.string()).required(),
+    date : Joi.date(),
+    isPublished : Joi.boolean(),
+    price : Joi.number().positive()
+});
+
 let Course = mongoose.model('Course',course_schema);
 
 module.exports.Course = Course;
+module.exports.validation_course = validation_course;
