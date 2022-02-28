@@ -21,7 +21,7 @@ let course_schema = new mongoose.Schema({
         type :[String],
         validate : {
             validator : function (v) {
-                return v && v.length > 2;
+                return v && v.length >= 2;
             },
             message : 'A course must have at least two tags'
         }

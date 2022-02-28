@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const {Course, validation_course,validation_update_course} = require('../models/course');
 const { Author } = require('../models/author');
+const auth = require('../middlewares/auth');
+const autoris = require('../middlewares/autoris')
 // add course to DB 
-router.post('',async (req,res)=>{
+router.post('',auth,async (req,res)=>{
     try {
 
         let results= validation_course.validate(req.body);
@@ -27,7 +29,7 @@ router.post('',async (req,res)=>{
     
 });
 
-// get All courses
+// get All courses 
 router.get('',async (req,res)=>{
     try {
         let courses = await Course.find().populate('author.id');
@@ -99,7 +101,7 @@ router.get('/title/starts/:prefixe',async (req,res)=>{
     
 })
 //update
-router.put('/:id',async (req,res)=>{
+router.put('/:id',auth,async (req,res)=>{
     try {
         let results= validation_update_course.validate(req.body);
         if(results.error)
@@ -113,7 +115,7 @@ router.put('/:id',async (req,res)=>{
     
 });
 
-router.delete('/:id',async (req,res)=>{
+router.delete('/:id',[auth,autoris],async (req,res)=>{
     try {
         let course = await Course.findByIdAndRemove(req.params.id);
         if(!course)
