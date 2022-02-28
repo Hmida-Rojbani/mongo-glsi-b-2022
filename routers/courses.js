@@ -30,7 +30,7 @@ router.post('',async (req,res)=>{
 // get All courses
 router.get('',async (req,res)=>{
     try {
-        let courses = await Course.find()//.populate('author.id');
+        let courses = await Course.find().populate('author.id');
         res.send(courses)
     } catch (error) {
         res.status(400).send('Error saving course :'+error.message);
